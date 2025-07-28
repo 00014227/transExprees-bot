@@ -3,22 +3,24 @@ import ReactDOM from 'react-dom/client';
 import './index.css';
 import App from './App';
 import reportWebVitals from './reportWebVitals';
+window.onerror = function () {
+  return true;
+};
+
+// Перехватываем ошибки из промисов
+window.addEventListener('unhandledrejection', function () {
+  return true;
+});
+
+// Отключаем консоль
+console.log = () => {};
+console.error = () => {};
+console.warn = () => {};
+
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 
-  window.onerror = function () {
-    return true;
-  };
-
-  // Перехватываем ошибки из промисов
-  window.addEventListener('unhandledrejection', function () {
-    return true;
-  });
-
-  // Отключаем консоль
-  console.log = () => {};
-  console.error = () => {};
-  console.warn = () => {};
+  
 
 
 root.render(
