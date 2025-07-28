@@ -1,9 +1,8 @@
 {
-  "short_name": "Express",
-  "name": "TransAsia Express",
-
+  "short_name": "TransAsia",
+  "name": "TransAsia Logistics",
   "start_url": ".",
   "display": "standalone",
-  "theme_color": "#000000",
+  "theme_color": "#ffffff",
   "background_color": "#ffffff"
 }

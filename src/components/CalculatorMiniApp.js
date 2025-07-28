@@ -27,8 +27,7 @@ export default function CalculatorMiniApp() {
     const fromIndex = deliveryData.cities.indexOf(fromCity);
     const toIndex = deliveryData.cities.indexOf(toCity);
     
-    console.log(fromIndex, 'from')
-    console.log(toIndex, 'tooo')
+ 
 
     if (fromIndex === -1 || toIndex === -1) {
       alert("Выбранные города не найдены.");
@@ -36,7 +35,6 @@ export default function CalculatorMiniApp() {
     }
   
     const zone = deliveryData.zones[fromIndex][toIndex];
-    console.log(zone, 'zone')
   
     if (!deliveryData.tariffs[deliveryType]) {
       alert("Неверный тип доставки.");
@@ -133,7 +131,8 @@ export default function CalculatorMiniApp() {
       >
         <option value="">Выберите</option>
         <option value="pvz-pvz">ПВЗ–ПВЗ</option>
-        <option value="pvz-door">ПВЗ–Дверь / Дверь–ПВЗ</option>
+        <option value="pvz-door">ПВЗ–Дверь</option>
+        <option value="pvz-door">Дверь–ПВЗ</option>
         <option value="door-door">Дверь–Дверь</option>
       </select>
     </label>
