@@ -11,7 +11,7 @@ export const initSocket = () => {
     return null;
   }
 
-  socket = new WebSocket('wss://https://coral-app-6u5nx.ondigitalocean.app//ws');
+  socket = new WebSocket('wss://coral-app-6u5nx.ondigitalocean.app/ws');
 
   socket.onopen = () => console.log("WebSocket connected");
   socket.onmessage = (msg) => console.log("Message:", msg.data);
