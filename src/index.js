@@ -3,29 +3,27 @@ import ReactDOM from 'react-dom/client';
 import './index.css';
 import App from './App';
 import reportWebVitals from './reportWebVitals';
+import ErrorBoundary from './ErrorBoundary';
 window.onerror = function () {
   return true;
 };
 
-// Перехватываем ошибки из промисов
-window.addEventListener('unhandledrejection', function () {
-  return true;
-});
 
-// Отключаем консоль
-console.log = () => {};
-console.error = () => {};
-console.warn = () => {};
 
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 
   
+window.onerror = (message) => {
+  alert(`Error occurred: ${message}`);
+};
 
 
 root.render(
   <React.StrictMode>
+    <ErrorBoundary>
     <App />
+    </ErrorBoundary>
   </React.StrictMode>
 );
 
