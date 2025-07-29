@@ -4,9 +4,11 @@ import axios from "axios";
 export default function OrderForm() {
   const [formData, setFormData] = useState({
     deliveryType: "",
-    senderNamePhone: "",
+    senderName: "",
+    senderPhone: "",
     senderAddress: "",
-    recipientNamePhone: "",
+    recipientName: "",
+    recipientPhone: "",
     recipientAddress: "",
     weight: "",
   });
@@ -22,24 +24,29 @@ export default function OrderForm() {
     setError("");
     const {
       deliveryType,
-      senderNamePhone,
+      senderName,
+      senderPhone,
       senderAddress,
-      recipientNamePhone,
+      recipientName,
+      recipientPhone,
       recipientAddress,
       weight,
     } = formData;
 
     if (
       !deliveryType ||
-      !senderNamePhone ||
+      !senderName ||
+      !senderPhone ||
       !senderAddress ||
-      !recipientNamePhone ||
+      !recipientName ||
+      !recipientPhone ||
       !recipientAddress ||
       !weight
     ) {
       setError("Пожалуйста, заполните все поля.");
       return;
     }
+
 
     try {
       await axios.post("http://localhost:3000/api/orders/submit", formData);
@@ -107,12 +114,23 @@ export default function OrderForm() {
       </label>
 
       <label style={{ fontSize: "0.95rem", fontWeight: "500" }}>
-        Имя и номер отправителя*
+        Имя отправителя*
         <input
           type="text"
-          placeholder="Имя и номер"
-          value={formData.senderNamePhone}
-          onChange={(e) => handleChange("senderNamePhone", e.target.value)}
+          placeholder="Введите имя"
+          value={formData.senderName}
+          onChange={(e) => handleChange("senderName", e.target.value)}
+          style={inputStyle}
+        />
+      </label>
+
+      <label style={{ fontSize: "0.95rem", fontWeight: "500" }}>
+        Телефон отправителя*
+        <input
+          type="tel"
+          placeholder="+998 XX XXX XX XX"
+          value={formData.senderPhone}
+          onChange={(e) => handleChange("senderPhone", e.target.value)}
           style={inputStyle}
         />
       </label>
@@ -128,16 +146,29 @@ export default function OrderForm() {
         />
       </label>
 
+      {/* Имя и номер получателя */}
       <label style={{ fontSize: "0.95rem", fontWeight: "500" }}>
-        Имя и номер получателя*
+        Имя получателя*
         <input
           type="text"
-          placeholder="Имя и номер"
-          value={formData.recipientNamePhone}
-          onChange={(e) => handleChange("recipientNamePhone", e.target.value)}
+          placeholder="Введите имя"
+          value={formData.recipientName}
+          onChange={(e) => handleChange("recipientName", e.target.value)}
           style={inputStyle}
         />
       </label>
+
+      <label style={{ fontSize: "0.95rem", fontWeight: "500" }}>
+        Телефон получателя*
+        <input
+          type="tel"
+          placeholder="+998 XX XXX XX XX"
+          value={formData.recipientPhone}
+          onChange={(e) => handleChange("recipientPhone", e.target.value)}
+          style={inputStyle}
+        />
+      </label>
+
 
       <label style={{ fontSize: "0.95rem", fontWeight: "500" }}>
         Адрес получателя*

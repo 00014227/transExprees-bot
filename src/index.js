@@ -4,9 +4,6 @@ import './index.css';
 import App from './App';
 import reportWebVitals from './reportWebVitals';
 import ErrorBoundary from './ErrorBoundary';
-window.onerror = function () {
-  return true;
-};
 
 
 

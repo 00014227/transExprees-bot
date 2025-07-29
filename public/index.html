@@ -6,10 +6,21 @@
     <meta name="theme-color" content="#ffffff" />
     <meta name="description" content="TransAsia Logistics Mini App" />
     <title>TransAsia Logistics</title>
+    
+    <!-- Favicon (можно убрать, если не используешь) -->
+    <link rel="icon" href="%PUBLIC_URL%/favicon.ico" />
+    
+    <!-- PWA manifest -->
     <link rel="manifest" href="%PUBLIC_URL%/manifest.json" />
   </head>
   <body>
+    <!-- Fallback -->
     <noscript>You need to enable JavaScript to run this app.</noscript>
+
+    <!-- React root -->
     <div id="root"></div>
+
+    <!-- Main JS bundle -->
+    <script src="%PUBLIC_URL%/static/js/bundle.js" crossorigin="anonymous"></script>
   </body>
 </html>
