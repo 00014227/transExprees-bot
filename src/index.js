@@ -3,7 +3,6 @@ import ReactDOM from 'react-dom/client';
 import './index.css';
 import App from './App';
 import reportWebVitals from './reportWebVitals';
-import ErrorBoundary from './ErrorBoundary';
 
 
 
@@ -11,16 +10,9 @@ import ErrorBoundary from './ErrorBoundary';
 const root = ReactDOM.createRoot(document.getElementById('root'));
 
   
-window.onerror = (message) => {
-  alert(`Error occurred: ${message}`);
-};
-
-
 root.render(
   <React.StrictMode>
-    <ErrorBoundary>
     <App />
-    </ErrorBoundary>
   </React.StrictMode>
 );
 
