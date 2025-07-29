@@ -52,7 +52,7 @@ export default function OrderForm() {
       await axios.post("http://localhost:3000/api/orders/submit", formData);
       setSubmitted(true);
     } catch (err) {
-      setError("Произошла ошибка при отправке. Попробуйте снова.");
+      setError("Произошла ошибка при отправке. Попробуйте снова.", err);
       console.error(err);
     }
   };
@@ -76,8 +76,7 @@ export default function OrderForm() {
         backgroundColor: "#F5F5F5",
         borderRadius: "10px",
         boxShadow: "0 4px 12px rgba(0, 0, 0, 0.1)",
-        height: "100vh"
-
+        
       }}
     >
       <h2 style={{ marginBottom: "1rem", color: "#D32F2F" }}>
