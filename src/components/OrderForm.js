@@ -49,7 +49,7 @@ export default function OrderForm() {
 
 
     try {
-      await axios.post("http://209.38.226.195:3000/api/orders/submit", formData);
+      await axios.post("https://back.transosiyo-express.uz/api/orders/submit", formData);
       setSubmitted(true);
     } catch (err) {
       setError("Произошла ошибка при отправке. Попробуйте снова.", err);
