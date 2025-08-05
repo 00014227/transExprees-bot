@@ -243,24 +243,6 @@ console.log(formData, 'dddd')
           </button>
         </div>
 
-        {/* Результат */}
-        {result && (
-          <div
-            style={{
-              marginTop: "1.5rem",
-              padding: "1rem",
-              backgroundColor: "#FFF",
-              borderRadius: "6px",
-              border: "1px solid #E0E0E0",
-              textAlign: "center"
-            }}
-          >
-            <p style={{ fontWeight: "bold", fontSize: "1.1rem", color: "#333" }}>
-              Цена: {result.price}
-            </p>
-            <p style={{ fontSize: "0.9rem", color: "#666" }}>{result.note}</p>
-          </div>
-        )}
       </div>
     </div>
 
