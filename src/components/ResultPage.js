@@ -17,44 +17,53 @@ export default function ResultPage() {
     note,
   } = state;
 
-  // Преобразование типа доставки
   const deliveryLabels = {
-    "door-pvz": "Доставка до пункта выдачи TRANSASIA",
     "door-door": "Доставка до двери",
+    "pvz-door": "Доставка до пункта выдачи TRANSASIA"
   };
 
   return (
     <div style={{
-      maxWidth: "480px",
+      maxWidth: "520px",
       margin: "0 auto",
-      padding: "1.5rem",
-      fontFamily: "Segoe UI",
-      backgroundColor: "#F5F5F5",
-      borderRadius: "10px",
-      boxShadow: "0 4px 12px rgba(0, 0, 0, 0.1)",
-      height: "100vh"
+      padding: "2rem",
+      fontFamily: "Segoe UI, sans-serif",
+      backgroundColor: "#F0F2F5",
+      borderRadius: "12px",
+      boxShadow: "0 6px 16px rgba(0, 0, 0, 0.1)",
+      height: "100vh",
+      boxSizing: "border-box"
     }}>
-      <h2 style={{ color: "#D32F2F", marginBottom: "1rem" }}>📦 Результат расчета</h2>
+      <h2 style={{
+        color: "#2C3E50",
+        marginBottom: "1.5rem",
+        fontSize: "1.7rem"
+      }}>
+        📦 Результат расчета
+      </h2>
 
-      <p><strong>🚚 Тип доставки:</strong> {deliveryLabels[deliveryType] || deliveryType}</p>
-      <p><strong>📍 Откуда:</strong> {fromCity}</p>
-      <p><strong>📍 Куда:</strong> {toCity}</p>
-      <p><strong>⚖️ Вес:</strong> {weight} кг</p>
-      <p><strong>💵 Стоимость:</strong> {price} сум</p>
-      <p style={{ fontStyle: "italic", marginTop: "0.5rem" }}>{note}</p>
+      <p style={textStyle}><strong>🚚 Тип доставки:</strong> {deliveryLabels[deliveryType] || deliveryType}</p>
+      <p style={textStyle}><strong>📍 Откуда:</strong> {fromCity}</p>
+      <p style={textStyle}><strong>📍 Куда:</strong> {toCity}</p>
+      <p style={textStyle}><strong>⚖️ Вес:</strong> {weight} кг</p>
+      <p style={textStyle}><strong>💵 Стоимость:</strong> {price} сум</p>
+      <p style={{ fontStyle: "italic", marginTop: "1rem", fontSize: "1rem", color: "#555" }}>
+        {note}
+      </p>
 
       <button
         onClick={() => navigate("/order")}
         style={{
-          marginTop: "1.5rem",
-          padding: "0.8rem 1.2rem",
-          backgroundColor: "#D32F2F",
+          marginTop: "2rem",
+          padding: "1rem 1.5rem",
+          backgroundColor: "#2C3E50",
           color: "white",
           border: "none",
-          borderRadius: "6px",
+          borderRadius: "8px",
           cursor: "pointer",
           width: "100%",
-          fontWeight: "bold"
+          fontWeight: "bold",
+          fontSize: "1.1rem"
         }}
       >
         📝 Оформить заказ
@@ -62,3 +71,9 @@ export default function ResultPage() {
     </div>
   );
 }
+
+const textStyle = {
+  fontSize: "1.1rem",
+  color: "#333",
+  marginBottom: "0.6rem"
+};

@@ -148,8 +148,8 @@ console.log(formData, 'dddd')
             }}
           >
             <option value="">Выберите</option>
-            <option value="door-pvz">Доставка до пункта выдачи TRANSASIA</option>
             <option value="door-door">Доставка до двери</option>
+            <option value="pvz-door">Доставка до пункта выдачи TRANSASIA</option>
           </select>
         </label>
 
