@@ -1,5 +1,6 @@
 import { useState } from "react";
 import deliveryData from "../delivery_calculator_full.json"; // подключаем JSON
+import { useNavigate } from "react-router-dom";
 
 export default function CalculatorMiniApp() {
   const [formData, setFormData] = useState({
@@ -8,6 +9,7 @@ export default function CalculatorMiniApp() {
     toCity: "",
     weight: "",
   });
+  const navigate = useNavigate()
   const [result, setResult] = useState(null);
 
   const cities = deliveryData.cities;
@@ -68,6 +70,18 @@ export default function CalculatorMiniApp() {
         note: "Цена не найдена для этого веса. Свяжитесь с оператором.",
       });
     }
+
+    navigate("/result", {
+      state: {
+        deliveryType,
+        fromCity,
+        toCity,
+        weight,
+        price: entry.toLocaleString(),
+        note: "Цена рассчитана на основе введённых данных. Для уточнения свяжитесь с оператором."
+      }
+    });
+    
   };
   
 console.log(formData, 'dddd')
@@ -120,7 +134,7 @@ console.log(formData, 'dddd')
       >
         {/* Вариант доставки */}
         <label style={{ fontSize: "0.95rem", fontWeight: "500" }}>
-          Вариант доставки*
+          Тип доставки
           <select
             value={formData.deliveryType}
             onChange={(e) => handleChange("deliveryType", e.target.value)}
@@ -134,16 +148,14 @@ console.log(formData, 'dddd')
             }}
           >
             <option value="">Выберите</option>
-            <option value="pvz-pvz">ПВЗ–ПВЗ</option>
-            <option value="pvz-door">ПВЗ–Дверь</option>
-            <option value="pvz-door">Дверь–ПВЗ</option>
-            <option value="door-door">Дверь–Дверь</option>
+            <option value="door-pvz">Доставка до пункта выдачи TRANSASIA</option>
+            <option value="door-door">Доставка до двери</option>
           </select>
         </label>
 
         {/* Город отправления */}
         <label style={{ fontSize: "0.95rem", fontWeight: "500" }}>
-          Город отправления*
+          Город отправления
           <select
             value={formData.fromCity}
             onChange={(e) => handleChange("fromCity", e.target.value)}
@@ -167,7 +179,7 @@ console.log(formData, 'dddd')
 
         {/* Город получения */}
         <label style={{ fontSize: "0.95rem", fontWeight: "500" }}>
-          Город получения*
+          Город получения
           <select
             value={formData.toCity}
             onChange={(e) => handleChange("toCity", e.target.value)}
@@ -191,7 +203,7 @@ console.log(formData, 'dddd')
 
         {/* Вес */}
         <label style={{ fontSize: "0.95rem", fontWeight: "500" }}>
-          Вес (кг)*
+          Вес (кг)
           <input
             type="number"
             min="1"
