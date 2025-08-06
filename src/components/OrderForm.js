@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import axios from "axios";
 import deliveryData from "../delivery_calculator_full.json"; 
 import { useLocation } from "react-router-dom";
@@ -6,6 +6,7 @@ import { useLocation } from "react-router-dom";
 export default function OrderForm() {
   const cities = deliveryData.cities;
   const { state } = useLocation() || {};
+  const tg = window.Telegram.WebApp;
 
 
 
@@ -24,6 +25,18 @@ export default function OrderForm() {
     recipientAddress: "",
     weight: "",
   });
+
+  useEffect(() => {
+    const phoneFromTelegram = tg.initDataUnsafe.user?.phone_number;
+    
+    if (phoneFromTelegram) {
+      setFormData(prev => ({
+        ...prev,
+        senderPhone: phoneFromTelegram
+      }));
+    }
+  }, []);
+  
 
 
   const [submitted, setSubmitted] = useState(false);
