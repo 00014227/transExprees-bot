@@ -1,12 +1,21 @@
 import { useState } from "react";
 import axios from "axios";
 import deliveryData from "../delivery_calculator_full.json"; 
+import { useLocation } from "react-router-dom";
 
 export default function OrderForm() {
   const cities = deliveryData.cities;
+  const { state } = useLocation() || {};
+
+
+
+  const {
+    deliveryType,
+  } = state || {};
+
 
   const [formData, setFormData] = useState({
-    deliveryType: "",
+    deliveryType: state?.deliveryType || "",
     senderName: "",
     senderPhone: "",
     senderAddress: "",
@@ -16,12 +25,11 @@ export default function OrderForm() {
     weight: "",
   });
 
+
   const [submitted, setSubmitted] = useState(false);
   const [error, setError] = useState("");
 
-  // const handleChange = (field, value) => {
-  //   setFormData({ ...formData, [field]: value });
-  // };
+
   const handleChange = (field, value) => {
     setFormData((prev) => ({
       ...prev,
@@ -29,8 +37,14 @@ export default function OrderForm() {
     }));
   };
 
+
+  
   const handleSubmit = async () => {
     setError("");
+    const deliveryLabels = {
+      "door-door": "Доставка до двери",
+      "pvz-door": "Доставка до пункта выдачи TRANSASIA"
+    };
     const {
       deliveryType,
       senderName,
@@ -41,6 +55,8 @@ export default function OrderForm() {
       recipientAddress,
       weight,
     } = formData;
+
+
 
     if (
       !deliveryType ||
@@ -55,10 +71,14 @@ export default function OrderForm() {
       setError("Пожалуйста, заполните все поля.");
       return;
     }
+    const deliveryLabels2 = deliveryLabels[deliveryType]
 
 
     try {
-      await axios.post("https://back.transosiyo-express.uz/api/orders/submit", formData);
+      await axios.post("https://back.transosiyo-express.uz/api/orders/submit", {
+        ...formData,
+        deliveryLabels2,
+      });
       setSubmitted(true);
     } catch (err) {
       setError("Произошла ошибка при отправке. Попробуйте снова.", err);
@@ -179,6 +199,7 @@ export default function OrderForm() {
           Адрес отправителя
           <input
             type="text"
+            placeholder="Город, улица, дом."
             value={formData.senderAddress}
             onChange={(e) => handleChange("senderAddress", e.target.value)}
             style={inputStyle}

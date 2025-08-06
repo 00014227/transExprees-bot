@@ -52,7 +52,11 @@ export default function ResultPage() {
       </p>
 
       <button
-        onClick={() => navigate("/order")}
+        onClick={() => navigate("/order", {
+          state: {
+            deliveryType,
+          }
+        })}
         style={{
           marginTop: "2rem",
           padding: "1rem 1.5rem",
