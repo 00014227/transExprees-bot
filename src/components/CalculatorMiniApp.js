@@ -78,7 +78,7 @@ export default function CalculatorMiniApp() {
         toCity,
         weight,
         price: entry.toLocaleString(),
-        note: "Цена рассчитана на основе введённых данных. Для уточнения свяжитесь с оператором."
+        note: "Расчет является предворительным. Для уточнения свяжитесь с оператором."
       }
     });
     
@@ -179,7 +179,7 @@ console.log(formData, 'dddd')
 
         {/* Город получения */}
         <label style={{ fontSize: "0.95rem", fontWeight: "500" }}>
-          Город получения
+          Город отправки
           <select
             value={formData.toCity}
             onChange={(e) => handleChange("toCity", e.target.value)}

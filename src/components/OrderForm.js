@@ -1,7 +1,10 @@
 import { useState } from "react";
 import axios from "axios";
+import deliveryData from "../delivery_calculator_full.json"; 
 
 export default function OrderForm() {
+  const cities = deliveryData.cities;
+
   const [formData, setFormData] = useState({
     deliveryType: "",
     senderName: "",
@@ -16,8 +19,14 @@ export default function OrderForm() {
   const [submitted, setSubmitted] = useState(false);
   const [error, setError] = useState("");
 
+  // const handleChange = (field, value) => {
+  //   setFormData({ ...formData, [field]: value });
+  // };
   const handleChange = (field, value) => {
-    setFormData({ ...formData, [field]: value });
+    setFormData((prev) => ({
+      ...prev,
+      [field]: value,
+    }));
   };
 
   const handleSubmit = async () => {
@@ -59,10 +68,26 @@ export default function OrderForm() {
 
   if (submitted) {
     return (
-      <div style={{ textAlign: "center", padding: "1.5rem" }}>
-        <h2 style={{ color: "#4CAF50" }}>✅ Заявка отправлена!</h2>
-        <p>С вами скоро свяжется оператор.</p>
-      </div>
+<div
+  style={{
+    height: "100vh",
+    display: "flex",
+    justifyContent: "center",
+    alignItems: "center",
+    textAlign: "center",
+    padding: "1.5rem",
+    flexDirection: "column",
+    fontFamily: "Segoe UI, sans-serif"
+  }}
+>
+  <h2 style={{ color: "#4CAF50", fontSize: "1.6rem", marginBottom: "0.5rem" }}>
+    ✅ Ваша заявка принята!
+  </h2>
+  <p style={{ fontSize: "1.1rem", color: "#333" }}>
+    Ожидайте звонка от оператора.
+  </p>
+</div>
+
     );
   }
 
@@ -105,15 +130,13 @@ export default function OrderForm() {
           }}
         >
           <option value="">Выберите</option>
-          <option value="pvz-pvz">ПВЗ–ПВЗ</option>
-          <option value="pvz-door">ПВЗ–Дверь</option>
-          <option value="pvz-door">Дверь–ПВЗ</option>
-          <option value="door-door">Дверь–Дверь</option>
+          <option value="pvz-door">Доставка до пунка выдачи TRANSASIA</option>
+          <option value="door-door">Доставка до двери</option>
         </select>
       </label>
 
       <label style={{ fontSize: "0.95rem", fontWeight: "500" }}>
-        Имя отправителя*
+        Имя отправителя
         <input
           type="text"
           placeholder="Введите имя"
@@ -124,7 +147,7 @@ export default function OrderForm() {
       </label>
 
       <label style={{ fontSize: "0.95rem", fontWeight: "500" }}>
-        Телефон отправителя*
+        Телефон отправителя
         <input
           type="tel"
           placeholder="+998 XX XXX XX XX"
@@ -134,20 +157,38 @@ export default function OrderForm() {
         />
       </label>
 
-      <label style={{ fontSize: "0.95rem", fontWeight: "500" }}>
-        Адрес отправителя*
-        <input
-          type="text"
-          placeholder="Улица, дом, кв."
-          value={formData.senderAddress}
-          onChange={(e) => handleChange("senderAddress", e.target.value)}
-          style={inputStyle}
-        />
-      </label>
+       {/* Мгновенная смена формы */}
+       {formData.deliveryType === "pvz-door" ? (
+        <label style={{ fontSize: "0.95rem", fontWeight: "500" }}>
+          Адрес отправителя
+          <select
+            value={formData.fromCity}
+            onChange={(e) => handleChange("senderAddress", e.target.value)}
+            style={inputStyle}
+          >
+            <option value="">Выберите</option>
+            {cities.map((city) => (
+              <option key={city} value={city}>
+                {city}
+              </option>
+            ))}
+          </select>
+        </label>
+      ) : formData.deliveryType === "door-door" ? (
+        <label style={{ fontSize: "0.95rem", fontWeight: "500" }}>
+          Адрес отправителя
+          <input
+            type="text"
+            value={formData.senderAddress}
+            onChange={(e) => handleChange("senderAddress", e.target.value)}
+            style={inputStyle}
+          />
+        </label>
+      ) : null}
 
       {/* Имя и номер получателя */}
       <label style={{ fontSize: "0.95rem", fontWeight: "500" }}>
-        Имя получателя*
+        Имя получателя
         <input
           type="text"
           placeholder="Введите имя"
@@ -158,7 +199,7 @@ export default function OrderForm() {
       </label>
 
       <label style={{ fontSize: "0.95rem", fontWeight: "500" }}>
-        Телефон получателя*
+        Телефон получателя
         <input
           type="tel"
           placeholder="+998 XX XXX XX XX"
@@ -170,10 +211,10 @@ export default function OrderForm() {
 
 
       <label style={{ fontSize: "0.95rem", fontWeight: "500" }}>
-        Адрес получателя*
+        Адрес получателя
         <input
           type="text"
-          placeholder="Улица, дом, кв."
+          placeholder="Город, улица, дом."
           value={formData.recipientAddress}
           onChange={(e) => handleChange("recipientAddress", e.target.value)}
           style={inputStyle}
@@ -181,7 +222,7 @@ export default function OrderForm() {
       </label>
 
       <label style={{ fontSize: "0.95rem", fontWeight: "500" }}>
-        Вес отправки (кг)*
+        Вес отправки (кг)
         <input
           type="number"
           min="1"
