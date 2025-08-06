@@ -1,19 +1,11 @@
 import { useState, useEffect } from "react";
 import axios from "axios";
-import deliveryData from "../delivery_calculator_full.json"; 
+import deliveryData from "../delivery_calculator_full.json";
 import { useLocation } from "react-router-dom";
 
 export default function OrderForm() {
   const cities = deliveryData.cities;
-  const { state } = useLocation() || {};
-  const tg = window.Telegram.WebApp;
-
-
-
-  const {
-    deliveryType,
-  } = state || {};
-
+  const { state } = useLocation();
 
   const [formData, setFormData] = useState({
     deliveryType: state?.deliveryType || "",
@@ -27,16 +19,22 @@ export default function OrderForm() {
   });
 
   useEffect(() => {
-    const phoneFromTelegram = tg.initDataUnsafe.user?.phone_number;
-    
-    if (phoneFromTelegram) {
-      setFormData(prev => ({
-        ...prev,
-        senderPhone: phoneFromTelegram
-      }));
+    // Проверка, доступен ли Telegram WebApp
+    if (window.Telegram && window.Telegram.WebApp) {
+      const tg = window.Telegram.WebApp;
+
+      const phoneFromTelegram = tg?.initDataUnsafe?.user?.phone_number;
+
+      if (phoneFromTelegram) {
+        setFormData(prev => ({
+          ...prev,
+          senderPhone: phoneFromTelegram
+        }));
+      }
+    } else {
+      console.warn("Telegram WebApp API is not available. Are you testing outside Telegram?");
     }
   }, []);
-  
 
 
   const [submitted, setSubmitted] = useState(false);
