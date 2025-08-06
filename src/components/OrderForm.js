@@ -71,14 +71,15 @@ export default function OrderForm() {
       setError("Пожалуйста, заполните все поля.");
       return;
     }
-    const deliveryLabels2 = deliveryLabels[deliveryType]
+    const dataToSend = {
+      ...formData,
+      deliveryType: deliveryLabels[formData.deliveryType] || formData.deliveryType,
+    };
+    
 
 
     try {
-      await axios.post("https://back.transosiyo-express.uz/api/orders/submit", {
-        ...formData,
-        deliveryLabels2,
-      });
+      await axios.post("https://back.transosiyo-express.uz/api/orders/submit", dataToSend);
       setSubmitted(true);
     } catch (err) {
       setError("Произошла ошибка при отправке. Попробуйте снова.", err);
