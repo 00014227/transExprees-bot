@@ -42,12 +42,15 @@ export default function CalculatorMiniApp() {
     }
   
     const numericWeight = parseInt(weight, 10);
-    if (isNaN(numericWeight) || numericWeight < 1 || numericWeight > 20) {
-      alert("Вес должен быть числом от 1 до 20.");
+    if (isNaN(numericWeight) || numericWeight < 1) {
+      alert("Вес должен быть числом от 1 и выше.");
       return;
-    }
-  
-    const zonePrice = deliveryData.tariffs[deliveryType][numericWeight - 1]?.[zone];
+    } 
+    
+    const baseWeight = Math.min(numericWeight, 20);
+    const extraWeight = Math.max(numericWeight - 20, 0);
+
+    const zonePrice = deliveryData.tariffs[deliveryType][baseWeight - 1]?.[zone];
   
     if (!zonePrice) {
       setResult({
@@ -57,12 +60,15 @@ export default function CalculatorMiniApp() {
       return;
     }
   
-    const entry = zonePrice.price;
-  
-    if (entry) {
+    const extraCharge = extraWeight * 5000;
+    const finalPrice = zonePrice.price + extraCharge;
+
+    if (finalPrice) {
       setResult({
-        price: `${entry.toLocaleString()} сум`,
-        note: "Цена рассчитана на основе введённых данных. Для уточнения свяжитесь с оператором.",
+        price: finalPrice,
+        note: extraWeight > 0
+          ? `Добавлено ${extraWeight} кг сверх лимита — доплата ${extraCharge} сум`
+          : "",
       });
     } else {
       setResult({
@@ -77,14 +83,14 @@ export default function CalculatorMiniApp() {
         fromCity,
         toCity,
         weight,
-        price: entry.toLocaleString(),
+        price: finalPrice.toLocaleString(),
         note: "Расчет является предворительным. Для уточнения свяжитесь с оператором."
       }
     });
     
   };
   
-console.log(formData, 'dddd')
+
   return (
     <div
       style={{
