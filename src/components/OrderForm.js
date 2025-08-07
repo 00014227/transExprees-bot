@@ -18,26 +18,23 @@ export default function OrderForm() {
     weight: "",
   });
 
+  function getQueryParam(key) {
+    return new URLSearchParams(window.location.search).get(key);
+  }
+  
+
   useEffect(() => {
-    if (window.Telegram && window.Telegram.WebApp) {
-      const tg = window.Telegram.WebApp;
-      tg.ready();
-      tg.expand();
-  
-      alert("Telegram WebApp:", tg);
-      alert("User:", tg.initDataUnsafe.user);
-  
-      const phone = tg.initDataUnsafe.user?.phone_number;
-      if (phone) {
-        setFormData(prev => ({ ...prev, senderPhone: phone }));
-        alert(senderPhone)
-      }
-    } else {
-      alert("Telegram WebApp API is not available. Are you testing outside Telegram?");
+    const phoneFromURL = getQueryParam("phone");
+
+    if (phoneFromURL) {
+      setFormData(prev => ({
+        ...prev,
+        senderPhone: phoneFromURL,
+      }));
     }
   }, []);
   
-
+  console.log(formData.senderPhone)
 
   const [submitted, setSubmitted] = useState(false);
   const [error, setError] = useState("");
