@@ -25,7 +25,7 @@ export default function OrderForm() {
 
   useEffect(() => {
     const phoneFromURL = getQueryParam("phone");
-
+    alert(phoneFromURL)
     if (phoneFromURL) {
       setFormData(prev => ({
         ...prev,
