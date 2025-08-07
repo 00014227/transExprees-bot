@@ -163,7 +163,7 @@ export default function CalculatorMiniApp() {
 
         {/* Город отправления */}
         <label style={{ fontSize: "0.95rem", fontWeight: "500" }}>
-          Город отправления
+          Город отправки
           <div style={{ position: "relative" }}>
           <select
             value={formData.fromCity}
@@ -189,7 +189,7 @@ export default function CalculatorMiniApp() {
 
         {/* Город получения */}
         <label style={{ fontSize: "0.95rem", fontWeight: "500" }}>
-          Город отправки
+          Город получения
           <div style={{ position: "relative" }}>
           <select
             value={formData.toCity}

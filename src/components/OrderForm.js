@@ -127,7 +127,7 @@ export default function OrderForm() {
 
       {/* Вариант доставки */}
       <label style={{ fontSize: "0.95rem", fontWeight: "500" }}>
-        Вариант перевозки*
+        Тип перевозки
         <select
           value={formData.deliveryType}
           onChange={(e) => handleChange("deliveryType", e.target.value)}
