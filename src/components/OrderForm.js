@@ -19,22 +19,23 @@ export default function OrderForm() {
   });
 
   useEffect(() => {
-    // Проверка, доступен ли Telegram WebApp
     if (window.Telegram && window.Telegram.WebApp) {
       const tg = window.Telegram.WebApp;
-
-      const phoneFromTelegram = tg?.initDataUnsafe?.user?.phone_number;
-      alert(phoneFromTelegram)
-      if (phoneFromTelegram) {
-        setFormData(prev => ({
-          ...prev,
-          senderPhone: phoneFromTelegram
-        }));
+      tg.ready();
+      tg.expand();
+  
+      alert("Telegram WebApp:", tg);
+      alert("User:", tg.initDataUnsafe.user);
+  
+      const phone = tg.initDataUnsafe.user?.phone_number;
+      if (phone) {
+        setFormData(prev => ({ ...prev, senderPhone: phone }));
       }
     } else {
-      alert("Telegram WebApp API is not available. Are you testing outside Telegram?");
+      console.warn("Telegram WebApp API is not available. Are you testing outside Telegram?");
     }
   }, []);
+  
 
 
   const [submitted, setSubmitted] = useState(false);
