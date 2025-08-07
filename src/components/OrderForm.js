@@ -30,9 +30,10 @@ export default function OrderForm() {
       const phone = tg.initDataUnsafe.user?.phone_number;
       if (phone) {
         setFormData(prev => ({ ...prev, senderPhone: phone }));
+        alert(senderPhone)
       }
     } else {
-      console.warn("Telegram WebApp API is not available. Are you testing outside Telegram?");
+      alert("Telegram WebApp API is not available. Are you testing outside Telegram?");
     }
   }, []);
   
