@@ -141,6 +141,7 @@ export default function CalculatorMiniApp() {
         {/* Вариант доставки */}
         <label style={{ fontSize: "0.95rem", fontWeight: "500" }}>
           Тип доставки
+          <div style={{ position: "relative" }}>
           <select
             value={formData.deliveryType}
             onChange={(e) => handleChange("deliveryType", e.target.value)}
@@ -153,15 +154,17 @@ export default function CalculatorMiniApp() {
               marginTop: "6px"
             }}
           >
-            <option value="">Выберите</option>
+            <option  value="">Выберите</option>
             <option value="door-door">Доставка до двери</option>
             <option value="pvz-door">Доставка до пункта выдачи TRANSASIA</option>
           </select>
+          </div>
         </label>
 
         {/* Город отправления */}
         <label style={{ fontSize: "0.95rem", fontWeight: "500" }}>
           Город отправления
+          <div style={{ position: "relative" }}>
           <select
             value={formData.fromCity}
             onChange={(e) => handleChange("fromCity", e.target.value)}
@@ -181,11 +184,13 @@ export default function CalculatorMiniApp() {
               </option>
             ))}
           </select>
+          </div>
         </label>
 
         {/* Город получения */}
         <label style={{ fontSize: "0.95rem", fontWeight: "500" }}>
           Город отправки
+          <div style={{ position: "relative" }}>
           <select
             value={formData.toCity}
             onChange={(e) => handleChange("toCity", e.target.value)}
@@ -205,6 +210,7 @@ export default function CalculatorMiniApp() {
               </option>
             ))}
           </select>
+          </div>
         </label>
 
         {/* Вес */}

@@ -18,24 +18,6 @@ export default function OrderForm() {
     weight: "",
   });
 
-  function getQueryParam(key) {
-    return new URLSearchParams(window.location.search).get(key);
-  }
-  
-
-  useEffect(() => {
-    const phoneFromURL = getQueryParam("phone");
-    alert(phoneFromURL)
-    if (phoneFromURL) {
-      setFormData(prev => ({
-        ...prev,
-        senderPhone: phoneFromURL,
-      }));
-    }
-  }, []);
-  
-  console.log(formData.senderPhone)
-
   const [submitted, setSubmitted] = useState(false);
   const [error, setError] = useState("");
 
