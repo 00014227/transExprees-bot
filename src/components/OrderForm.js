@@ -83,35 +83,57 @@ export default function OrderForm() {
   if (submitted) {
     return (
       <div
+      style={{
+        height: "100vh",
+        display: "flex",
+        justifyContent: "center",
+        alignItems: "center",
+        padding: "1.5rem",
+        fontFamily: "Segoe UI, sans-serif",
+        backgroundColor: "#f0f0f0",
+      }}
+    >
+      <div
         style={{
-          height: "100vh",
-          display: "flex",
-          justifyContent: "center",
-          alignItems: "center",
-          padding: "1.5rem",
-          fontFamily: "Segoe UI, sans-serif",
-          backgroundColor: "#f0f0f0",
+          backgroundColor: "#fff",
+          boxShadow: "0 4px 12px rgba(0, 0, 0, 0.1)",
+          borderRadius: "12px",
+          padding: "2rem",
+          textAlign: "center",
+          maxWidth: "400px",
+          width: "100%",
         }}
       >
-        <div
+        <h2
           style={{
-            backgroundColor: "#fff",
-            boxShadow: "0 4px 12px rgba(0, 0, 0, 0.1)",
-            borderRadius: "12px",
-            padding: "2rem",
-            textAlign: "center",
-            maxWidth: "400px",
-            width: "100%",
+            color: "#4CAF50",
+            fontSize: "1.6rem",
+            marginBottom: "0.5rem",
           }}
         >
-
-
-          <h2 style={{ color: "#4CAF50", fontSize: "1.6rem", marginBottom: "0.5rem" }}>
-            ✅ Ваша заявка принята!
-          </h2>
-          <p style={{ fontSize: "1.1rem", color: "#333" }}>Ожидайте звонка от оператора.</p>
-        </div>
+          ✅ Ваша заявка принята!
+        </h2>
+        <p style={{ fontSize: "1.1rem", color: "#333" }}>
+          Ожидайте звонка от оператора.
+        </p>
+  
+        <button
+          onClick={() => setSubmitted(false)}
+          style={{
+            marginTop: "1.5rem",
+            padding: "0.75rem 1.2rem",
+            backgroundColor: "#2C3E50",
+            color: "white",
+            border: "none",
+            borderRadius: "8px",
+            cursor: "pointer",
+            fontWeight: "bold",
+          }}
+        >
+          📝 Оформить снова
+        </button>
       </div>
+    </div>
     );
   }
 
