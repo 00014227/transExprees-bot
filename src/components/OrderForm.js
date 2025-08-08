@@ -295,7 +295,7 @@ export default function OrderForm() {
           border: "none",
           borderRadius: "6px",
           cursor: "pointer",
-          width: "30%",
+          width: "100%",
           fontWeight: "bold",
           fontSize: "16px",
         }}
