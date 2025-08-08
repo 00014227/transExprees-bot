@@ -35,7 +35,7 @@ export default function ResultPage() {
       boxSizing: "border-box"
     }}>
       <div style={{
-        display: "flex", alignItems: "center", gap: "50px"
+        display: "flex", alignItems: "center", gap: "10px"
       }}>
         <button
           onClick={() => window.history.back()}

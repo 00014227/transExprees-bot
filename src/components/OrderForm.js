@@ -129,7 +129,7 @@ export default function OrderForm() {
     >
 
       <div style={{
-        display: "flex", alignItems: "center", gap: "60px"
+        display: "flex", alignItems: "center", gap: "10px"
       }}>
         <button
           onClick={() => window.history.back()}
