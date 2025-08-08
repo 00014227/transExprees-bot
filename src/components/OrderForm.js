@@ -87,19 +87,31 @@ export default function OrderForm() {
     display: "flex",
     justifyContent: "center",
     alignItems: "center",
-    textAlign: "center",
     padding: "1.5rem",
-    flexDirection: "column",
-    fontFamily: "Segoe UI, sans-serif"
+    fontFamily: "Segoe UI, sans-serif",
+    backgroundColor: "#f0f0f0"
   }}
 >
-  <h2 style={{ color: "#4CAF50", fontSize: "1.6rem", marginBottom: "0.5rem" }}>
-    ✅ Ваша заявка принята!
-  </h2>
-  <p style={{ fontSize: "1.1rem", color: "#333" }}>
-    Ожидайте звонка от оператора.
-  </p>
+  <div
+    style={{
+      backgroundColor: "#fff",
+      boxShadow: "0 4px 12px rgba(0, 0, 0, 0.1)",
+      borderRadius: "12px",
+      padding: "2rem",
+      textAlign: "center",
+      maxWidth: "400px",
+      width: "100%"
+    }}
+  >
+    <h2 style={{ color: "#4CAF50", fontSize: "1.6rem", marginBottom: "0.5rem" }}>
+      ✅ Ваша заявка принята!
+    </h2>
+    <p style={{ fontSize: "1.1rem", color: "#333" }}>
+      Ожидайте звонка от оператора.
+    </p>
+  </div>
 </div>
+
 
     );
   }
