@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import axios from "axios";
 import deliveryData from "../delivery_calculator_full.json";
 import { useLocation } from "react-router-dom";
@@ -14,13 +14,13 @@ export default function OrderForm() {
     senderAddress: "",
     recipientName: "",
     recipientPhone: "",
-    recipientAddress: "",
-    weight: "",
+    recipientAddress: state?.toCity || "",
+    weight: state?.weight || "",
   });
 
   const [submitted, setSubmitted] = useState(false);
   const [error, setError] = useState("");
-
+  const [fieldErrors, setFieldErrors] = useState({});
 
   const handleChange = (field, value) => {
     setFormData((prev) => ({
@@ -29,90 +29,89 @@ export default function OrderForm() {
     }));
   };
 
+  const inputStyle = (fieldName) => ({
+    display: "block",
+    width: "100%",
+    marginTop: "6px",
+    marginBottom: "12px",
+    padding: "0.6rem",
+    borderRadius: "6px",
+    border: fieldErrors[fieldName] ? "1px solid red" : "1px solid #CCC",
+    backgroundColor: "#FAFAFA",
+    fontSize: "16px",
+    WebkitAppearance: "none",
+  });
 
-  
   const handleSubmit = async () => {
     setError("");
     const deliveryLabels = {
       "door-door": "Доставка до двери",
-      "pvz-door": "Доставка до пункта выдачи TRANSASIA"
+      "pvz-door": "Доставка до пункта выдачи TRANSASIA",
     };
-    const {
-      deliveryType,
-      senderName,
-      senderPhone,
-      senderAddress,
-      recipientName,
-      recipientPhone,
-      recipientAddress,
-      weight,
-    } = formData;
 
+    const newErrors = {};
+    if (!formData.deliveryType) newErrors.deliveryType = true;
+    if (!formData.senderName) newErrors.senderName = true;
+    if (!formData.senderPhone) newErrors.senderPhone = true;
+    if (!formData.senderAddress) newErrors.senderAddress = true;
+    if (!formData.recipientName) newErrors.recipientName = true;
+    if (!formData.recipientPhone) newErrors.recipientPhone = true;
+    if (!formData.recipientAddress) newErrors.recipientAddress = true;
+    if (!formData.weight) newErrors.weight = true;
 
+    setFieldErrors(newErrors);
 
-    if (
-      !deliveryType ||
-      !senderName ||
-      !senderPhone ||
-      !senderAddress ||
-      !recipientName ||
-      !recipientPhone ||
-      !recipientAddress ||
-      !weight
-    ) {
-      setError("Пожалуйста, заполните все поля.");
+    if (Object.keys(newErrors).length > 0) {
+      setError("Пожалуйста, заполните все обязательные поля.");
       return;
     }
+
     const dataToSend = {
       ...formData,
       deliveryType: deliveryLabels[formData.deliveryType] || formData.deliveryType,
     };
-    
-
 
     try {
       await axios.post("https://back.transosiyo-express.uz/api/orders/submit", dataToSend);
       setSubmitted(true);
     } catch (err) {
-      setError("Произошла ошибка при отправке. Попробуйте снова.", err);
+      setError("Произошла ошибка при отправке. Попробуйте снова.");
       console.error(err);
     }
   };
 
   if (submitted) {
     return (
-<div
-  style={{
-    height: "100vh",
-    display: "flex",
-    justifyContent: "center",
-    alignItems: "center",
-    padding: "1.5rem",
-    fontFamily: "Segoe UI, sans-serif",
-    backgroundColor: "#f0f0f0"
-  }}
->
-  <div
-    style={{
-      backgroundColor: "#fff",
-      boxShadow: "0 4px 12px rgba(0, 0, 0, 0.1)",
-      borderRadius: "12px",
-      padding: "2rem",
-      textAlign: "center",
-      maxWidth: "400px",
-      width: "100%"
-    }}
-  >
-    <h2 style={{ color: "#4CAF50", fontSize: "1.6rem", marginBottom: "0.5rem" }}>
-      ✅ Ваша заявка принята!
-    </h2>
-    <p style={{ fontSize: "1.1rem", color: "#333" }}>
-      Ожидайте звонка от оператора.
-    </p>
-  </div>
-</div>
+      <div
+        style={{
+          height: "100vh",
+          display: "flex",
+          justifyContent: "center",
+          alignItems: "center",
+          padding: "1.5rem",
+          fontFamily: "Segoe UI, sans-serif",
+          backgroundColor: "#f0f0f0",
+        }}
+      >
+        <div
+          style={{
+            backgroundColor: "#fff",
+            boxShadow: "0 4px 12px rgba(0, 0, 0, 0.1)",
+            borderRadius: "12px",
+            padding: "2rem",
+            textAlign: "center",
+            maxWidth: "400px",
+            width: "100%",
+          }}
+        >
 
 
+          <h2 style={{ color: "#4CAF50", fontSize: "1.6rem", marginBottom: "0.5rem" }}>
+            ✅ Ваша заявка принята!
+          </h2>
+          <p style={{ fontSize: "1.1rem", color: "#333" }}>Ожидайте звонка от оператора.</p>
+        </div>
+      </div>
     );
   }
 
@@ -126,72 +125,125 @@ export default function OrderForm() {
         backgroundColor: "#F5F5F5",
         borderRadius: "10px",
         boxShadow: "0 4px 12px rgba(0, 0, 0, 0.1)",
-        
       }}
     >
-      <h2 style={{ marginBottom: "1rem", color: "#D32F2F" }}>
-        📝 Оформление заявки
-      </h2>
 
-      {error && (
-        <div style={{ color: "red", marginBottom: "1rem" }}>{error}</div>
-      )}
+      <div style={{
+        display: "flex", alignItems: "center", gap: "60px"
+      }}>
+        <button
+          onClick={() => window.history.back()}
+          style={{
+            backgroundColor: "#E0E0E0",
+            border: "none",
+            color: "#333",
+            fontWeight: "500",
+            fontSize: "1rem",
+            cursor: "pointer",
 
-      {/* Вариант доставки */}
-      <label style={{ fontSize: "0.95rem", fontWeight: "500" }}>
+            display: "flex",
+            alignItems: "center",
+            borderRadius: "999px",
+            transition: "background-color 0.3s ease",
+            height: "35px"
+          }}
+          onMouseOver={(e) => (e.currentTarget.style.backgroundColor = "#D5D5D5")}
+          onMouseOut={(e) => (e.currentTarget.style.backgroundColor = "#E0E0E0")}
+        >
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            height="20"
+            viewBox="0 0 24 24"
+            width="20"
+            fill="currentColor"
+          >
+            <path d="M15.41 7.41 14 6l-6 6 6 6 1.41-1.41L10.83 12z" />
+          </svg>
+
+        </button>
+
+
+        <h2 style={{ marginBottom: "1rem", color: "#D32F2F" }}>📝 Оформление заявки</h2>
+      </div>
+      {error && <div style={{ color: "red", marginBottom: "1rem" }}>{error}</div>}
+
+      <label>
         Тип перевозки
         <select
           value={formData.deliveryType}
           onChange={(e) => handleChange("deliveryType", e.target.value)}
-          style={{
-            display: "block",
-            width: "100%",
-            marginTop: "6px",
-            marginBottom: "12px",
-            padding: "0.6rem",
-            borderRadius: "6px",
-            border: "1px solid #ccc",
-            backgroundColor: "#FAFAFA",
-          }}
+          style={inputStyle("deliveryType")}
         >
-          <option value="">Выберите</option>
-          <option value="pvz-door">Доставка до пунка выдачи TRANSASIA</option>
+          <option value="">Выберите тип доставки</option>
+          <option value="pvz-door">Доставка до пункта выдачи TRANSASIA</option>
           <option value="door-door">Доставка до двери</option>
         </select>
       </label>
 
-      <label style={{ fontSize: "0.95rem", fontWeight: "500" }}>
+      <label>
         Имя отправителя
         <input
           type="text"
-          placeholder="Введите имя"
+          placeholder="Имя отправителя"
           value={formData.senderName}
           onChange={(e) => handleChange("senderName", e.target.value)}
-          style={inputStyle}
+          style={inputStyle("senderName")}
         />
       </label>
 
-      <label style={{ fontSize: "0.95rem", fontWeight: "500" }}>
+      <label>
         Телефон отправителя
         <input
           type="tel"
           placeholder="+998 XX XXX XX XX"
           value={formData.senderPhone}
           onChange={(e) => handleChange("senderPhone", e.target.value)}
-          style={inputStyle}
+          style={inputStyle("senderPhone")}
         />
       </label>
 
-       {/* Мгновенная смена формы */}
-       {formData.deliveryType === "pvz-door" ? (
-        <label style={{ fontSize: "0.95rem", fontWeight: "500" }}>
-          Адрес отправителя
+      <label>
+        Адрес отправителя
+        <input
+          type="text"
+          placeholder="Город, улица, дом"
+          value={formData.senderAddress}
+          onChange={(e) => handleChange("senderAddress", e.target.value)}
+          style={inputStyle("senderAddress")}
+        />
+      </label>
+
+      <label>
+        Имя получателя
+        <input
+          type="text"
+          placeholder="Имя получателя"
+          value={formData.recipientName}
+          onChange={(e) => handleChange("recipientName", e.target.value)}
+          style={inputStyle("recipientName")}
+        />
+      </label>
+
+      <label>
+        Телефон получателя
+        <input
+          type="tel"
+          placeholder="+998 XX XXX XX XX"
+          value={formData.recipientPhone}
+          onChange={(e) => handleChange("recipientPhone", e.target.value)}
+          style={inputStyle("recipientPhone")}
+        />
+      </label>
+
+      {formData.deliveryType === "pvz-door" ? (
+        <label>
+          Адрес получателя
           <select
-            value={formData.fromCity}
-            onChange={(e) => handleChange("senderAddress", e.target.value)}
-            style={inputStyle}
+            value={formData.recipientAddress}
+            onChange={(e) => handleChange("recipientAddress", e.target.value)}
+            style={inputStyle("recipientAddress")}
           >
-            <option value="">Выберите</option>
+            <option value="">{state?.toCity || "Выберите город"}</option>
             {cities.map((city) => (
               <option key={city} value={city}>
                 {city}
@@ -200,62 +252,28 @@ export default function OrderForm() {
           </select>
         </label>
       ) : formData.deliveryType === "door-door" ? (
-        <label style={{ fontSize: "0.95rem", fontWeight: "500" }}>
-          Адрес отправителя
+        <label>
+          Адрес получателя
           <input
             type="text"
-            placeholder="Город, улица, дом."
-            value={formData.senderAddress}
-            onChange={(e) => handleChange("senderAddress", e.target.value)}
-            style={inputStyle}
+            placeholder="Город, улица, дом"
+            value={formData.recipientAddress}
+            onChange={(e) => handleChange("recipientAddress", e.target.value)}
+            style={inputStyle("recipientAddress")}
           />
         </label>
       ) : null}
 
-      {/* Имя и номер получателя */}
-      <label style={{ fontSize: "0.95rem", fontWeight: "500" }}>
-        Имя получателя
-        <input
-          type="text"
-          placeholder="Введите имя"
-          value={formData.recipientName}
-          onChange={(e) => handleChange("recipientName", e.target.value)}
-          style={inputStyle}
-        />
-      </label>
-
-      <label style={{ fontSize: "0.95rem", fontWeight: "500" }}>
-        Телефон получателя
-        <input
-          type="tel"
-          placeholder="+998 XX XXX XX XX"
-          value={formData.recipientPhone}
-          onChange={(e) => handleChange("recipientPhone", e.target.value)}
-          style={inputStyle}
-        />
-      </label>
-
-
-      <label style={{ fontSize: "0.95rem", fontWeight: "500" }}>
-        Адрес получателя
-        <input
-          type="text"
-          placeholder="Город, улица, дом."
-          value={formData.recipientAddress}
-          onChange={(e) => handleChange("recipientAddress", e.target.value)}
-          style={inputStyle}
-        />
-      </label>
-
-      <label style={{ fontSize: "0.95rem", fontWeight: "500" }}>
+      <label>
         Вес отправки (кг)
         <input
           type="number"
+          placeholder="Вес в кг"
           min="1"
           max="20"
           value={formData.weight}
           onChange={(e) => handleChange("weight", e.target.value)}
-          style={inputStyle}
+          style={inputStyle("weight")}
         />
       </label>
 
@@ -271,6 +289,7 @@ export default function OrderForm() {
           cursor: "pointer",
           width: "100%",
           fontWeight: "bold",
+          fontSize: "16px",
         }}
       >
         Отправить заявку
@@ -278,14 +297,3 @@ export default function OrderForm() {
     </div>
   );
 }
-
-const inputStyle = {
-  display: "block",
-  width: "95%",
-  marginTop: "6px",
-  marginBottom: "12px",
-  padding: "0.6rem",
-  borderRadius: "6px",
-  border: "1px solid #ccc",
-  backgroundColor: "#FAFAFA",
-};

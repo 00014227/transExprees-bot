@@ -1,5 +1,5 @@
 import { useState } from "react";
-import deliveryData from "../delivery_calculator_full.json"; // подключаем JSON
+import deliveryData from "../delivery_calculator_full.json";
 import { useNavigate } from "react-router-dom";
 
 export default function CalculatorMiniApp() {
@@ -9,73 +9,78 @@ export default function CalculatorMiniApp() {
     toCity: "",
     weight: "",
   });
-  const navigate = useNavigate()
-  const [result, setResult] = useState(null);
 
+  const [fieldErrors, setFieldErrors] = useState({});
+  const navigate = useNavigate();
   const cities = deliveryData.cities;
 
   const handleChange = (field, value) => {
     setFormData({ ...formData, [field]: value });
+    setFieldErrors((prev) => ({ ...prev, [field]: false }));
   };
+
+  const inputStyle = (field) => ({
+    width: "100%",
+    padding: "0.6rem",
+    borderRadius: "6px",
+    backgroundColor: "#FAFAFA",
+    border: fieldErrors[field] ? "1px solid red" : "1px solid #CCC",
+    marginTop: "6px"
+  });
 
   const handleSubmit = () => {
     const { deliveryType, fromCity, toCity, weight } = formData;
-  
-    if (!deliveryType || !fromCity || !toCity || !weight) {
-      alert("Пожалуйста, заполните все поля.");
+    const newErrors = {};
+
+    if (!deliveryType) newErrors.deliveryType = true;
+    if (!fromCity) newErrors.fromCity = true;
+    if (!toCity) newErrors.toCity = true;
+    if (!weight) newErrors.weight = true;
+
+    setFieldErrors(newErrors);
+
+    if (Object.keys(newErrors).length > 0) {
       return;
     }
-  
-    const fromIndex = deliveryData.cities.indexOf(fromCity);
-    const toIndex = deliveryData.cities.indexOf(toCity);
-  
+
+    const fromIndex = cities.indexOf(fromCity);
+    const toIndex = cities.indexOf(toCity);
+
     if (fromIndex === -1 || toIndex === -1) {
       alert("Выбранные города не найдены.");
       return;
     }
-  
+
     const zone = deliveryData.zones[fromIndex][toIndex];
-  
-    if (!deliveryData.tariffs[deliveryType]) {
-      alert("Неверный тип доставки.");
-      return;
-    }
-  
+    const tariff = deliveryData.tariffs[deliveryType];
+
     const numericWeight = parseInt(weight, 10);
     if (isNaN(numericWeight) || numericWeight < 1) {
       alert("Вес должен быть числом от 1 и выше.");
       return;
-    } 
-    
+    }
+
     const baseWeight = Math.min(numericWeight, 20);
     const extraWeight = Math.max(numericWeight - 20, 0);
 
-    const zonePrice = deliveryData.tariffs[deliveryType][baseWeight - 1]?.[zone];
-  
+    const zonePrice = tariff?.[baseWeight - 1]?.[zone];
+
     if (!zonePrice) {
-      setResult({
-        price: "-",
-        note: "Не найдены цены для этой зоны. Свяжитесь с оператором.",
+      navigate("/result", {
+        state: {
+          deliveryType,
+          fromCity,
+          toCity,
+          weight,
+          price: "-",
+          note: "Не найдены цены для этой зоны. Свяжитесь с оператором.",
+        },
       });
       return;
     }
-  
+
     const extraCharge = extraWeight * 5000;
     const finalPrice = zonePrice.price + extraCharge;
-
-    if (finalPrice) {
-      setResult({
-        price: finalPrice,
-        note: extraWeight > 0
-          ? `Добавлено ${extraWeight} кг сверх лимита — доплата ${extraCharge} сум`
-          : "",
-      });
-    } else {
-      setResult({
-        price: "-",
-        note: "Цена не найдена для этого веса. Свяжитесь с оператором.",
-      });
-    }
 
     navigate("/result", {
       state: {
@@ -84,98 +89,38 @@ export default function CalculatorMiniApp() {
         toCity,
         weight,
         price: finalPrice.toLocaleString(),
-        note: "Расчет является предворительным. Для уточнения свяжитесь с оператором."
-      }
+        note: "Расчет является предворительным. Для уточнения свяжитесь с оператором.",
+      },
     });
-    
   };
-  
 
   return (
-    <div
-      style={{
-        maxWidth: "480px",
-        margin: "0 auto",
-        padding: "1.5rem",
-        fontFamily: "'Segoe UI', Tahoma, Geneva, Verdana, sans-serif",
-        backgroundColor: "#F5F5F5",
-        borderRadius: "10px",
-        boxShadow: "0 4px 12px rgba(0, 0, 0, 0.1)",
-        border: "1px solid #E0E0E0",
-        height: "100vh"
-      }}
-    >
-      <header
-        style={{
-          display: "flex",
-          alignItems: "center",
-          marginBottom: "1.5rem"
-        }}
-      >
-        <img
-          src="/download.png"
-          alt="TransAsia Logistics"
-          style={{
-            height: "48px",
-            marginRight: "12px"
-          }}
-        />
-        <h1
-          style={{
-            fontSize: "1.2rem",
-            fontWeight: "bold",
-            color: "#D32F2F"
-          }}
-        >
-          Калькулятор доставки
-        </h1>
+    <div style={{ maxWidth: "480px", margin: "0 auto", padding: "1.5rem", fontFamily: "'Segoe UI', Tahoma, Geneva, Verdana, sans-serif", backgroundColor: "#F5F5F5", borderRadius: "10px", boxShadow: "0 4px 12px rgba(0, 0, 0, 0.1)", border: "1px solid #E0E0E0", height: "100vh" }}>
+      <header style={{ display: "flex", alignItems: "center", marginBottom: "1.5rem" }}>
+        <img src="/download.png" alt="TransAsia Logistics" style={{ height: "48px", marginRight: "12px" }} />
+        <h1 style={{ fontSize: "1.2rem", fontWeight: "bold", color: "#D32F2F" }}>Калькулятор доставки</h1>
       </header>
 
-      <div
-        style={{
-          display: "flex",
-          flexDirection: "column",
-          gap: "1rem"
-        }}
-      >
-        {/* Вариант доставки */}
+      <div style={{ display: "flex", flexDirection: "column", gap: "1rem" }}>
         <label style={{ fontSize: "0.95rem", fontWeight: "500" }}>
           Тип доставки
-          <div style={{ position: "relative" }}>
           <select
             value={formData.deliveryType}
             onChange={(e) => handleChange("deliveryType", e.target.value)}
-            style={{
-              width: "100%",
-              padding: "0.6rem",
-              borderRadius: "6px",
-              backgroundColor: "#FAFAFA",
-              border: "1px solid #CCC",
-              marginTop: "6px"
-            }}
+            style={inputStyle("deliveryType")}
           >
-            <option  value="">Выберите</option>
+            <option value="">Выберите</option>
             <option value="door-door">Доставка до двери</option>
             <option value="pvz-door">Доставка до пункта выдачи TRANSASIA</option>
           </select>
-          </div>
         </label>
 
-        {/* Город отправления */}
         <label style={{ fontSize: "0.95rem", fontWeight: "500" }}>
           Город отправки
-          <div style={{ position: "relative" }}>
           <select
             value={formData.fromCity}
             onChange={(e) => handleChange("fromCity", e.target.value)}
-            style={{
-              width: "100%",
-              padding: "0.6rem",
-              borderRadius: "6px",
-              backgroundColor: "#FAFAFA",
-              border: "1px solid #CCC",
-              marginTop: "6px"
-            }}
+            style={inputStyle("fromCity")}
           >
             <option value="">Выберите</option>
             {cities.map((city) => (
@@ -184,24 +129,14 @@ export default function CalculatorMiniApp() {
               </option>
             ))}
           </select>
-          </div>
         </label>
 
-        {/* Город получения */}
         <label style={{ fontSize: "0.95rem", fontWeight: "500" }}>
           Город получения
-          <div style={{ position: "relative" }}>
           <select
             value={formData.toCity}
             onChange={(e) => handleChange("toCity", e.target.value)}
-            style={{
-              width: "100%",
-              padding: "0.6rem",
-              borderRadius: "6px",
-              backgroundColor: "#FAFAFA",
-              border: "1px solid #CCC",
-              marginTop: "6px"
-            }}
+            style={inputStyle("toCity")}
           >
             <option value="">Выберите</option>
             {cities.map((city) => (
@@ -210,10 +145,8 @@ export default function CalculatorMiniApp() {
               </option>
             ))}
           </select>
-          </div>
         </label>
 
-        {/* Вес */}
         <label style={{ fontSize: "0.95rem", fontWeight: "500" }}>
           Вес (кг)
           <input
@@ -223,40 +156,27 @@ export default function CalculatorMiniApp() {
             placeholder="Введите вес"
             value={formData.weight}
             onChange={(e) => handleChange("weight", e.target.value)}
-            style={{
-              width: "95%",
-              padding: "0.6rem",
-              borderRadius: "6px",
-              backgroundColor: "#FAFAFA",
-              border: "1px solid #CCC",
-              marginTop: "6px"
-            }}
+            style={inputStyle("weight")}
           />
         </label>
 
-
-        {/* Кнопка */}
-        <div style={{ display: "flex", justifyContent: "center", marginTop: "1rem" }}>
-          <button
-            onClick={handleSubmit}
-            style={{
-              marginTop: "1rem",
-              padding: "0.8rem 1.2rem",
-              backgroundColor: "#D32F2F",
-              color: "white",
-              border: "none",
-              borderRadius: "6px",
-              cursor: "pointer",
-              width: "100%",
-              fontWeight: "bold",
-            }}
-          >
-            Рассчитать
-          </button>
-        </div>
-
+        <button
+          onClick={handleSubmit}
+          style={{
+            marginTop: "1rem",
+            padding: "0.8rem 1.2rem",
+            backgroundColor: "#D32F2F",
+            color: "white",
+            border: "none",
+            borderRadius: "6px",
+            cursor: "pointer",
+            width: "100%",
+            fontWeight: "bold",
+          }}
+        >
+          Рассчитать
+        </button>
       </div>
     </div>
-
   );
 }
