@@ -1,11 +1,12 @@
 import { useState } from "react";
 import axios from "axios";
 import deliveryData from "../delivery_calculator_full.json";
-import { useLocation } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 
 export default function OrderForm() {
   const cities = deliveryData.cities;
   const { state } = useLocation();
+  const navigate = useNavigate();
 
   const [formData, setFormData] = useState({
     deliveryType: state?.deliveryType || "",
@@ -118,7 +119,7 @@ export default function OrderForm() {
         </p>
   
         <button
-          onClick={() => setSubmitted(false)}
+          onClick={() => navigate('/')}
           style={{
             marginTop: "1.5rem",
             padding: "0.75rem 1.2rem",
@@ -130,7 +131,7 @@ export default function OrderForm() {
             fontWeight: "bold",
           }}
         >
-          📝 Оформить снова
+          ⬅️ Назад / Калькулятор
         </button>
       </div>
     </div>
@@ -150,43 +151,10 @@ export default function OrderForm() {
       }}
     >
 
-      <div style={{
-        display: "flex", alignItems: "center", gap: "10px"
-      }}>
-        <button
-          onClick={() => window.history.back()}
-          style={{
-            backgroundColor: "#E0E0E0",
-            border: "none",
-            color: "#333",
-            fontWeight: "500",
-            fontSize: "1rem",
-            cursor: "pointer",
-
-            display: "flex",
-            alignItems: "center",
-            borderRadius: "999px",
-            transition: "background-color 0.3s ease",
-            height: "35px"
-          }}
-          onMouseOver={(e) => (e.currentTarget.style.backgroundColor = "#D5D5D5")}
-          onMouseOut={(e) => (e.currentTarget.style.backgroundColor = "#E0E0E0")}
-        >
-          <svg
-            xmlns="http://www.w3.org/2000/svg"
-            height="20"
-            viewBox="0 0 24 24"
-            width="20"
-            fill="currentColor"
-          >
-            <path d="M15.41 7.41 14 6l-6 6 6 6 1.41-1.41L10.83 12z" />
-          </svg>
-
-        </button>
+    
 
 
         <h2 style={{ marginBottom: "1rem", color: "#D32F2F" }}>📝 Оформление заявки</h2>
-      </div>
       {error && <div style={{ color: "red", marginBottom: "1rem" }}>{error}</div>}
 
       <label>
@@ -316,6 +284,23 @@ export default function OrderForm() {
       >
         Отправить заявку
       </button>
+
+      <button
+          onClick={() => navigate('/')}
+          style={{
+          marginTop: "1rem",
+          padding: "0.8rem 1.2rem",
+          backgroundColor: "#2C3E50",
+          color: "white",
+          border: "none",
+          borderRadius: "6px",
+          cursor: "pointer",
+          width: "30%",
+          fontWeight: "bold",
+          fontSize: "16px",
+        }}
+      >
+          ⬅️ Назад      </button>
     </div>
   );
 }
