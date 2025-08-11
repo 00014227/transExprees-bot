@@ -17,6 +17,7 @@ export default function OrderForm() {
     recipientPhone: "",
     recipientAddress: state?.toCity || "",
     weight: state?.weight || "",
+    price: state?.price || ""
   });
 
   const [submitted, setSubmitted] = useState(false);

@@ -57,6 +57,7 @@ export default function ResultPage() {
             deliveryType,
             toCity,
             weight,
+            price
           }
         })}
         style={{
