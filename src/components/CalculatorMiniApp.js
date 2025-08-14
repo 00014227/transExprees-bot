@@ -28,6 +28,15 @@ export default function CalculatorMiniApp() {
     marginTop: "6px"
   });
 
+  const inputStyle2 = (field) => ({
+    width: "96%",
+    padding: "0.6rem",
+    borderRadius: "6px",
+    backgroundColor: "#FAFAFA",
+    border: fieldErrors[field] ? "1px solid red" : "1px solid #CCC",
+    marginTop: "6px"
+  });
+
   const handleSubmit = () => {
     const { deliveryType, fromCity, toCity, weight } = formData;
     const newErrors = {};
@@ -156,7 +165,7 @@ export default function CalculatorMiniApp() {
             placeholder="Введите вес"
             value={formData.weight}
             onChange={(e) => handleChange("weight", e.target.value)}
-            style={inputStyle("weight")}
+            style={inputStyle2("weight")}
           />
         </label>
 

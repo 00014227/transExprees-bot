@@ -33,6 +33,19 @@ export default function OrderForm() {
 
   const inputStyle = (fieldName) => ({
     display: "block",
+    width: "96%",
+    marginTop: "6px",
+    marginBottom: "12px",
+    padding: "0.6rem",
+    borderRadius: "6px",
+    border: fieldErrors[fieldName] ? "1px solid red" : "1px solid #CCC",
+    backgroundColor: "#FAFAFA",
+    fontSize: "16px",
+    WebkitAppearance: "none",
+  });
+
+  const inputStyle2 = (fieldName) => ({
+    display: "block",
     width: "100%",
     marginTop: "6px",
     marginBottom: "12px",
@@ -163,7 +176,7 @@ export default function OrderForm() {
         <select
           value={formData.deliveryType}
           onChange={(e) => handleChange("deliveryType", e.target.value)}
-          style={inputStyle("deliveryType")}
+          style={inputStyle2("deliveryType")}
         >
           <option value="">Выберите тип доставки</option>
           <option value="pvz-door">Доставка до пункта выдачи TRANSASIA</option>
