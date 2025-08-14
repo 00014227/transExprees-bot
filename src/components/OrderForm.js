@@ -155,7 +155,7 @@ export default function OrderForm() {
     
 
 
-        <h2 style={{ marginBottom: "1rem", color: "#D32F2F" }}>📝 Оформление заявки</h2>
+      <h2 style={{ marginBottom: "1rem", color: "#D32F2F" }}>📝 Оформление заявки</h2>
       {error && <div style={{ color: "red", marginBottom: "1rem" }}>{error}</div>}
 
       <label>

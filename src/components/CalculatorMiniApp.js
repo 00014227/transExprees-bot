@@ -89,7 +89,7 @@ export default function CalculatorMiniApp() {
         toCity,
         weight,
         price: finalPrice.toLocaleString(),
-        note: "Расчет является предворительным. Для уточнения свяжитесь с оператором.",
+        note: "Расчет является предвaрительным. Для уточнения свяжитесь с оператором.",
       },
     });
   };
