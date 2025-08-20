@@ -1,8 +1,12 @@
 import { useState } from "react";
 import deliveryData from "../delivery_calculator_full.json";
 import { useNavigate } from "react-router-dom";
+import sendToBot from "../utils/sendToBot";
 
 export default function CalculatorMiniApp() {
+  // const tg = window.Telegram.WebApp;
+  // const user = tg.initDataUnsafe.user; // данные пользователя
+
   const [formData, setFormData] = useState({
     deliveryType: "",
     fromCity: "",
@@ -101,6 +105,13 @@ export default function CalculatorMiniApp() {
         note: "Расчет является предвaрительным. Для уточнения свяжитесь с оператором.",
       },
     });
+
+    try {
+      sendToBot()
+    } catch (error) {
+      console.log(error)
+    }
+
   };
 
   return (
