@@ -4,7 +4,7 @@ import { useNavigate } from "react-router-dom";
 
 export default function CalculatorMiniApp() {
   const tg = window.Telegram.WebApp;
-  const user = tg.initDataUnsafe.user; // данные пользователя
+  const user = tg.initDataUnsafe.user; 
 
   const [formData, setFormData] = useState({
     deliveryType: "",
