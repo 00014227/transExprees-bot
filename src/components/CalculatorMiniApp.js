@@ -3,7 +3,8 @@ import deliveryData from "../delivery_calculator_full.json";
 import { useNavigate } from "react-router-dom";
 
 export default function CalculatorMiniApp() {
-
+  const tg = window.Telegram.WebApp;
+  const user = tg.initDataUnsafe.user; // данные пользователя
 
   const [formData, setFormData] = useState({
     deliveryType: "",
@@ -106,6 +107,7 @@ export default function CalculatorMiniApp() {
 
 
 
+    alert("Данные отправлены в Google Sheets!", user);
   };
 
   return (
