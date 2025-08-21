@@ -1,19 +1,9 @@
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import deliveryData from "../delivery_calculator_full.json";
 import { useNavigate } from "react-router-dom";
 
 export default function CalculatorMiniApp() {
-  useEffect(() => {
-    if (window.Telegram?.WebApp) {
-      const tg = window.Telegram.WebApp;
-      console.log("InitData:", tg.initData);
-      console.log("InitDataUnsafe:", tg.initDataUnsafe);
-      alert(JSON.stringify(tg.initDataUnsafe, null, 2));
-    } else {
-      console.log("Telegram WebApp not available");
-    }
-  }, []);
-  
+
   const [formData, setFormData] = useState({
     deliveryType: "",
     fromCity: "",
