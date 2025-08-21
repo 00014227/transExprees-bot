@@ -4,9 +4,7 @@ import deliveryData from "../delivery_calculator_full.json";
 import { useLocation, useNavigate } from "react-router-dom";
 
 export default function OrderForm() {
-  const tg = window.Telegram.WebApp;
-  const user = tg.initDataUnsafe.user; 
-  console.log(user)
+
 
   const cities = deliveryData.cities;
   const { state } = useLocation();

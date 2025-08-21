@@ -10,9 +10,9 @@ function App() {
   useEffect(() => {
     if (window.Telegram?.WebApp) {
       const tg = window.Telegram.WebApp;
-      console.log("User:", tg.initDataUnsafe.user);
+
   
-      alert(JSON.stringify(tg.initDataUnsafe.user, null, 2)); // formatted
+      alert(JSON.stringify(tg, null, 2));
     } else {
       console.log("Telegram WebApp API not available");
       alert("Telegram WebApp API not available");
