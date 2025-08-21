@@ -4,13 +4,17 @@ import deliveryData from "../delivery_calculator_full.json";
 import { useLocation, useNavigate } from "react-router-dom";
 
 export default function OrderForm() {
+  const tg = window.Telegram.WebApp;
+  const user = tg.initDataUnsafe.user; 
+  console.log(user)
+
   const cities = deliveryData.cities;
   const { state } = useLocation();
   const navigate = useNavigate();
 
   const [formData, setFormData] = useState({
     deliveryType: state?.deliveryType || "",
-    senderName: "",
+    senderName: user?.username || "",
     senderPhone: "",
     senderAddress: "",
     recipientName: "",
@@ -23,6 +27,8 @@ export default function OrderForm() {
   const [submitted, setSubmitted] = useState(false);
   const [error, setError] = useState("");
   const [fieldErrors, setFieldErrors] = useState({});
+
+
 
   const handleChange = (field, value) => {
     setFormData((prev) => ({
