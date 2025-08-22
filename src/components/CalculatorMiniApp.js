@@ -4,18 +4,11 @@ import { useNavigate } from "react-router-dom";
 
 export default function CalculatorMiniApp() {
   useEffect(() => {
-    if (window.Telegram?.WebApp) {
-      const tg = window.Telegram.WebApp;
-      tg.ready();
-  
-      alert("InitDataUnsafe:", tg.initDataUnsafe);
-  
-      alert(JSON.stringify(tg.initDataUnsafe.user, null, 2));
-    } else {
-      alert("Telegram WebApp API not available");
-    }
+    const urlParams = new URLSearchParams(window.location.search);
+    const phone = urlParams.get("chatId");
+    alert( phone );
+
   }, []);
-  
   
 
   const [formData, setFormData] = useState({
