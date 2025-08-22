@@ -1,16 +1,9 @@
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import deliveryData from "../delivery_calculator_full.json";
 import { useNavigate } from "react-router-dom";
+import axios from "axios";
 
 export default function CalculatorMiniApp() {
-  useEffect(() => {
-    const urlParams = new URLSearchParams(window.location.search);
-    const phone = urlParams.get("chatId");
-    alert( phone );
-
-  }, []);
-  
-
   const [formData, setFormData] = useState({
     deliveryType: "",
     fromCity: "",
@@ -45,7 +38,7 @@ export default function CalculatorMiniApp() {
     marginTop: "6px"
   });
 
-  const handleSubmit = () => {
+  const handleSubmit = async () => {
     const { deliveryType, fromCity, toCity, weight } = formData;
     const newErrors = {};
 
@@ -98,6 +91,7 @@ export default function CalculatorMiniApp() {
 
     const extraCharge = extraWeight * 5000;
     const finalPrice = zonePrice.price + extraCharge;
+  
 
     navigate("/result", {
       state: {
@@ -110,6 +104,19 @@ export default function CalculatorMiniApp() {
       },
     });
 
+    const dataToSend = {
+      deliveryType,
+      fromCity,
+      toCity,
+      weight,
+      finalPrice, // numeric
+    };
+
+    // try {
+    //   await axios.post("http://localhost:3001/api/orders/calculation", dataToSend); 
+    // } catch (err) {
+    //   console.error(err);
+    // }
   };
 
   return (
