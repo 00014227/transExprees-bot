@@ -1,8 +1,19 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import deliveryData from "../delivery_calculator_full.json";
 import { useNavigate } from "react-router-dom";
 
 export default function CalculatorMiniApp() {
+  useEffect(() => {
+    const urlParams = new URLSearchParams(window.location.search);
+    const chatId = urlParams.get("chatId");
+    const lang = urlParams.get("lang");
+    const phone = urlParams.get("phone");
+    alert(urlParams, 'sssss')
+    console.log("Params:", { chatId, lang, phone });
+    alert("Params:", { chatId, lang, phone });
+
+  }, []);
+  
 
   const [formData, setFormData] = useState({
     deliveryType: "",
