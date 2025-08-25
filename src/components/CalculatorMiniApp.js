@@ -112,11 +112,11 @@ export default function CalculatorMiniApp() {
       finalPrice, // numeric
     };
 
-    // try {
-    //   await axios.post("http://localhost:3001/api/orders/calculation", dataToSend); 
-    // } catch (err) {
-    //   console.error(err);
-    // }
+    try {
+      await axios.post("https://back.transosiyo-express.uz/api/orders/calculation", dataToSend); 
+    } catch (err) {
+      console.error(err);
+    }
   };
 
   return (
