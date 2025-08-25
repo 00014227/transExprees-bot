@@ -12,7 +12,7 @@ export default function OrderForm() {
 
   const [formData, setFormData] = useState({
     deliveryType: state?.deliveryType || "",
-    senderName: user?.username || "",
+    senderName: "",
     senderPhone: "",
     senderAddress: "",
     recipientName: "",
