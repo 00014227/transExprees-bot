@@ -5,20 +5,20 @@ import { useLocation, useNavigate } from "react-router-dom";
 
 export default function OrderForm() {
 
-  const [param, setParam] = useState(null)
+
 
   useEffect(() => {
-    if (window.Telegram && window.Telegram.WebApp) {
-      const tg = window.Telegram.WebApp;
-
-      // this is where Telegram gives you the startapp param
-      setParam(tg.initDataUnsafe.start_param);
-      alert("Start Param:", tg.initDataUnsafe.start_param);
-
-      console.log("Start Param:", tg.initDataUnsafe.start_param);
+    const tg = window.Telegram.WebApp;
+    tg.ready();
+  
+    // Telegram injects your backend payload here
+    alert("Init data:", tg.initDataUnsafe);
+  
+    if (tg.initDataUnsafe.start_param) {
+      alert("Chat ID passed:", tg.initDataUnsafe.start_param);
     }
   }, []);
-  
+
   const cities = deliveryData.cities;
   const { state } = useLocation();
   const navigate = useNavigate();
