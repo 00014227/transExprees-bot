@@ -1,11 +1,24 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import axios from "axios";
 import deliveryData from "../delivery_calculator_full.json";
 import { useLocation, useNavigate } from "react-router-dom";
 
 export default function OrderForm() {
 
+  const [param, setParam] = useState(null)
 
+  useEffect(() => {
+    if (window.Telegram && window.Telegram.WebApp) {
+      const tg = window.Telegram.WebApp;
+
+      // this is where Telegram gives you the startapp param
+      setParam(tg.initDataUnsafe.start_param);
+      alert("Start Param:", tg.initDataUnsafe.start_param);
+
+      console.log("Start Param:", tg.initDataUnsafe.start_param);
+    }
+  }, []);
+  
   const cities = deliveryData.cities;
   const { state } = useLocation();
   const navigate = useNavigate();
