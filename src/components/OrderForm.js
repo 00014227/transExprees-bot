@@ -5,20 +5,6 @@ import { useLocation, useNavigate } from "react-router-dom";
 
 export default function OrderForm() {
 
-
-
-  useEffect(() => {
-    const tg = window.Telegram.WebApp;
-    tg.ready();
-  
-    // Telegram injects your backend payload here
-    alert("Init data:", tg.initDataUnsafe);
-  
-    if (tg.initDataUnsafe.start_param) {
-      alert("Chat ID passed:", tg.initDataUnsafe.start_param);
-    }
-  }, []);
-
   const cities = deliveryData.cities;
   const { state } = useLocation();
   const navigate = useNavigate();
