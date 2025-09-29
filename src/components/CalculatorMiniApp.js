@@ -1,9 +1,26 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import deliveryData from "../delivery_calculator_full.json";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
 
 export default function CalculatorMiniApp() {
+  const [userData, setUserData] = useState(null);
+
+
+
+  useEffect(() => {
+    const params = new URLSearchParams(window.location.search);
+    const chatId = params.get("chat_id")
+    console.log(chatId)
+    if (chatId) {
+      axios.get(`https://back.transosiyo-express.uz/api/user/${chatId}`)
+      .then(res => setUserData(res.data))
+      .catch(err => console.error("Error fetching user:", err))
+    }
+
+  }, [])
+  console.log(userData, 'userData')
+  console.log(userData?.user.phone, 'phone')
   const [formData, setFormData] = useState({
     deliveryType: "",
     fromCity: "",
@@ -110,10 +127,11 @@ export default function CalculatorMiniApp() {
       toCity,
       weight,
       finalPrice, // numeric
+      userData
     };
 
     try {
-      await axios.post("https://back.transosiyo-express.uz/api/orders/calculation", dataToSend); 
+      await axios.post("http://localhost:3001/api/calculation", dataToSend); 
     } catch (err) {
       console.error(err);
     }
