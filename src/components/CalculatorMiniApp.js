@@ -13,7 +13,7 @@ export default function CalculatorMiniApp() {
     const chatId = params.get("chat_id")
     console.log(chatId)
     if (chatId) {
-      axios.get(`https://back.transosiyo-express.uz/api/user/${chatId}`)
+      axios.get(`https://back.transosiyo-express.uz/api/orders/user/${chatId}`)
       .then(res => setUserData(res.data))
       .catch(err => console.error("Error fetching user:", err))
     }
