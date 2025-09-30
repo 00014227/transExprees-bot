@@ -131,7 +131,7 @@ export default function CalculatorMiniApp() {
     };
 
     try {
-      await axios.post("http://localhost:3001/api/calculation", dataToSend); 
+      await axios.post("https://back.transosiyo-express.uz/api/orders/calculation", dataToSend); 
     } catch (err) {
       console.error(err);
     }
