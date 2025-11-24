@@ -22,15 +22,13 @@ export default function CalculatorMiniApp() {
     }
 
   }, [])
-  console.log(userData, 'userData')
-  console.log(userData?.user.phone, 'phone')
+
   const [formData, setFormData] = useState({
     deliveryType: "",
     fromCity: "",
     toCity: "",
     weight: "",
   });
-  alert(JSON.stringify(user))
   const [fieldErrors, setFieldErrors] = useState({});
   const navigate = useNavigate();
   const cities = deliveryData.cities;
