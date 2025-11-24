@@ -30,7 +30,7 @@ export default function CalculatorMiniApp() {
     toCity: "",
     weight: "",
   });
-  alert(tg, user)
+  alert(JSON.stringify(user))
   const [fieldErrors, setFieldErrors] = useState({});
   const navigate = useNavigate();
   const cities = deliveryData.cities;
