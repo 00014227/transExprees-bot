@@ -2,11 +2,11 @@ import { useState, useEffect } from "react";
 import deliveryData from "../delivery_calculator_full.json";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
+import { useTelegram } from "../hooks/useTelegram";
 
 export default function CalculatorMiniApp() {
-  const tg = window.Telegram.WebApp;
-tg.expand(); // Open full screen
-console.log(tg, "wgwegweg")
+  const { tg, user } = useTelegram();
+
   const [userData, setUserData] = useState(null);
 
 
@@ -30,7 +30,7 @@ console.log(tg, "wgwegweg")
     toCity: "",
     weight: "",
   });
-
+  alert(tg, user)
   const [fieldErrors, setFieldErrors] = useState({});
   const navigate = useNavigate();
   const cities = deliveryData.cities;
