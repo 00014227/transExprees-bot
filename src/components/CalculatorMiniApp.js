@@ -4,6 +4,9 @@ import { useNavigate } from "react-router-dom";
 import axios from "axios";
 
 export default function CalculatorMiniApp() {
+  const tg = window.Telegram.WebApp;
+tg.expand(); // Open full screen
+console.log(tg, "wgwegweg")
   const [userData, setUserData] = useState(null);
 
 
@@ -13,7 +16,7 @@ export default function CalculatorMiniApp() {
     const chatId = params.get("chat_id")
     console.log(chatId)
     if (chatId) {
-      axios.get(`https://back.transosiyo-express.uz/api/orders/user/${chatId}`)
+      axios.get(`https://back.transosiyo-express.uz/api/user/${chatId}`)
       .then(res => setUserData(res.data))
       .catch(err => console.error("Error fetching user:", err))
     }
@@ -131,7 +134,8 @@ export default function CalculatorMiniApp() {
     };
 
     try {
-      await axios.post("https://back.transosiyo-express.uz/api/orders/calculation", dataToSend); 
+      await axios.post("http://localhost:3001/api/calculation", dataToSend); 
+      console.log('sssssssss')
     } catch (err) {
       console.error(err);
     }
