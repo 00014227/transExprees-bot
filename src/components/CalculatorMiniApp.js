@@ -6,8 +6,9 @@ import { useTelegram } from "../hooks/useTelegram";
 
 export default function CalculatorMiniApp() {
   const { tg, user } = useTelegram();
-  alert(tg, "TELEGRAM")
-  alert(JSON.parse(user), "USER")
+  alert("TG: " + JSON.stringify(tg, null, 2));
+  alert("USER: " + JSON.stringify(user, null, 2));
+  
   
 
 
