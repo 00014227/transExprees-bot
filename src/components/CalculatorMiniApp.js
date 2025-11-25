@@ -6,24 +6,10 @@ import { useTelegram } from "../hooks/useTelegram";
 
 export default function CalculatorMiniApp() {
   const { tg, user } = useTelegram();
-  alert("TG: " + JSON.stringify(tg, null, 2));
-  alert("USER: " + JSON.stringify(user, null, 2));
+  // alert("TG: " + JSON.stringify(tg, null, 2));
+  // alert("USER: " + JSON.stringify(user, null, 2));
   
-  
-
-
-
-  // useEffect(() => {
-  //   const params = new URLSearchParams(window.location.search);
-  //   const chatId = params.get("chat_id")
-  //   console.log(chatId)
-  //   if (chatId) {
-  //     axios.get(`https://back.transosiyo-express.uz/api/user/${chatId}`)
-  //     .then(res => setUserData(res.data))
-  //     .catch(err => console.error("Error fetching user:", err))
-  //   }
-
-  // }, [])
+  const userData = JSON.stringify(user)
 
   const [formData, setFormData] = useState({
     deliveryType: "",
@@ -130,7 +116,7 @@ export default function CalculatorMiniApp() {
       toCity,
       weight,
       finalPrice, // numeric
-      tg
+      userData
     };
     alert("Info", dataToSend)
     try {
