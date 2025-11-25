@@ -7,21 +7,21 @@ import { useTelegram } from "../hooks/useTelegram";
 export default function CalculatorMiniApp() {
   const { tg, user } = useTelegram();
 
-  const [userData, setUserData] = useState(null);
+  // const [userData, setUserData] = useState(null);
 
 
 
-  useEffect(() => {
-    const params = new URLSearchParams(window.location.search);
-    const chatId = params.get("chat_id")
-    console.log(chatId)
-    if (chatId) {
-      axios.get(`https://back.transosiyo-express.uz/api/user/${chatId}`)
-      .then(res => setUserData(res.data))
-      .catch(err => console.error("Error fetching user:", err))
-    }
+  // useEffect(() => {
+  //   const params = new URLSearchParams(window.location.search);
+  //   const chatId = params.get("chat_id")
+  //   console.log(chatId)
+  //   if (chatId) {
+  //     axios.get(`https://back.transosiyo-express.uz/api/user/${chatId}`)
+  //     .then(res => setUserData(res.data))
+  //     .catch(err => console.error("Error fetching user:", err))
+  //   }
 
-  }, [])
+  // }, [])
 
   const [formData, setFormData] = useState({
     deliveryType: "",
@@ -128,7 +128,8 @@ export default function CalculatorMiniApp() {
       toCity,
       weight,
       finalPrice, // numeric
-      userData
+      user,
+      tg
     };
 
     try {
