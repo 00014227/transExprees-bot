@@ -131,10 +131,9 @@ export default function CalculatorMiniApp() {
       user,
       tg
     };
-
+    alert("Info", dataToSend)
     try {
       await axios.post("http://localhost:3001/api/calculation", dataToSend); 
-      console.log('sssssssss')
     } catch (err) {
       console.error(err);
     }
