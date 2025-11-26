@@ -120,7 +120,7 @@ export default function CalculatorMiniApp() {
     };
     alert("Info", dataToSend)
     try {
-      await axios.post("http://localhost:3001/api/calculation", dataToSend); 
+      await axios.post("https://91f02716afae.ngrok-free.app/api/calculation", dataToSend); 
     } catch (err) {
       console.error(err);
     }
