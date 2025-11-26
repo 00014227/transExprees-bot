@@ -116,7 +116,10 @@ export default function CalculatorMiniApp() {
       toCity,
       weight,
       finalPrice, // numeric
-      userData
+      userData: {
+        firstName: user.first_name,      // FIX 2: correct field names
+        userName: user.username,
+      }
     };
     alert("Info:\n" + JSON.stringify(dataToSend, null, 2));
     try {
