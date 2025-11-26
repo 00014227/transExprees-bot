@@ -7,7 +7,7 @@ import { useTelegram } from "../hooks/useTelegram";
 export default function CalculatorMiniApp() {
   const { tg, user } = useTelegram();
   // alert("TG: " + JSON.stringify(tg, null, 2));
-  alert("USER: " + JSON.stringify(user, null, 2));
+  // alert("USER: " + JSON.stringify(user, null, 2));
   
   const userData = user;
 
@@ -117,7 +117,7 @@ export default function CalculatorMiniApp() {
       weight,
       finalPrice, // numeric
       userData: {
-        chatId: user.ID,
+        chatId: user.id,
         firstName: user.first_name,      // FIX 2: correct field names
         userName: user.username,
       }
