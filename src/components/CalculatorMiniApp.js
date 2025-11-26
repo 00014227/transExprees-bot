@@ -9,7 +9,7 @@ export default function CalculatorMiniApp() {
   // alert("TG: " + JSON.stringify(tg, null, 2));
   // alert("USER: " + JSON.stringify(user, null, 2));
   
-  const userData = JSON.stringify(user)
+  const userData = user;
 
   const [formData, setFormData] = useState({
     deliveryType: "",
@@ -118,9 +118,13 @@ export default function CalculatorMiniApp() {
       finalPrice, // numeric
       userData
     };
-    alert("Info", dataToSend)
+    alert("Info:\n" + JSON.stringify(dataToSend, null, 2));
     try {
-      await axios.post("https://91f02716afae.ngrok-free.app/api/calculation", dataToSend); 
+      await axios.post("https://91f02716afae.ngrok-free.app/api/calculation", dataToSend, 
+      {
+        headers: { "Content-Type": "application/json" },
+      }
+    );
     } catch (err) {
       console.error(err);
     }
