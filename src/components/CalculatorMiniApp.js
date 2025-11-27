@@ -124,7 +124,7 @@ export default function CalculatorMiniApp() {
     };
     alert("Info:\n" + JSON.stringify(dataToSend, null, 2));
     try {
-      await axios.post("https://91f02716afae.ngrok-free.app/api/calculation", dataToSend, 
+      await axios.post("http://back.transosiyo-express.uz/api/calculation", dataToSend, 
       {
         headers: { "Content-Type": "application/json" },
       }

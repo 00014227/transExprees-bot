@@ -90,7 +90,7 @@ export default function OrderForm() {
     };
 
     try {
-      await axios.post("https://back.transosiyo-express.uz/api/submit", dataToSend);
+      await axios.post("https://91f02716afae.ngrok-free.app/api/submit", dataToSend);
       setSubmitted(true);
     } catch (err) {
       setError("Произошла ошибка при отправке. Попробуйте снова.");
