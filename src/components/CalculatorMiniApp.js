@@ -122,9 +122,9 @@ export default function CalculatorMiniApp() {
         userName: user.username,
       }
     };
-    alert("Info:\n" + JSON.stringify(dataToSend, null, 2));
+    // alert("Info:\n" + JSON.stringify(dataToSend, null, 2));
     try {
-      await axios.post("http://back.transosiyo-express.uz/api/calculation", dataToSend, 
+      await axios.post("https://back.transosiyo-express.uz/api/calculation", dataToSend, 
       {
         headers: { "Content-Type": "application/json" },
       }
